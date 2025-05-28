@@ -80,3 +80,30 @@ class QuizPlayer:
         questions = list(self.quiz_information.keys())
         random.shuffle(questions)
 
+    def run(self):
+        quizzes = self.list_quizzes()
+        
+        print("\nSelect an Option:")
+        print("1. Import a new quiz")
+        for idx, file in enumerate(quizzes, start=2):
+            print(f"{idx}. {file}")
+        print(f"{len(quizzes)+2}. Exit")
+
+        choice = input("Enter your choice: ").strip()
+
+        if choice == "1":
+            self.import_new_quiz()
+        elif choice.isdigit() and 2 <= int(choice) < len(quizzes) + 2:
+            self.load_existing_quiz(quizzes[int(choice) - 2])
+        else:
+            print("Exiting", end='', flush=True)
+            for msg in [" .", " ..", " ..."]:
+                time.sleep(0.5)
+                print(msg, end='', flush=True)
+            exit()
+
+        self.take_quiz()
+
+if __name__ == "__main__":
+    player = QuizPlayer()
+    player.run()
