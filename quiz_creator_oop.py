@@ -25,3 +25,29 @@ class Quiz:
 
         self.question_number += 1
         
+    def edit_question(self):
+        print("\nQuestions:")
+        for question_id in self.dict_quiz:
+            print(question_id)
+        
+        to_edit = input("Please enter the Question number to edit (number only): ")
+        key = f"Question {to_edit}"
+        if key in self.dict_quiz:
+            print(f"\nEditing {key}")
+            new_question = input("Enter new question: ")
+            new_choices = {}
+            print("Enter the new 4 choices: ")
+            for label in self.choice_labels:
+                new_choice = input(f"Choice {label}: ")
+                new_choice[label] = new_choice
+            new_answer = input("Enter new correct answer (The letter): ").upper()
+            self.dict_quiz[key] = {
+                "Question": new_question,
+                "Choices": new_choices,
+                "Answer": new_answer,
+
+            }
+
+        else: 
+            print("Invalid question number.")
+            
