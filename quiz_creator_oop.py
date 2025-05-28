@@ -15,8 +15,7 @@ class Quiz:
         for label in self.choice_labels:
             choice_text = input (f"Choice {label}: ")
             choices_dict[label] = choice_text
-        answer_input = input("Enter Answer (The Letter): ").upper()
-
+        answer_input = input("Enter Answer (The Letter): ").upper().strip()
         self.dict_quiz[f"Question {self.question_number}"] = {
             "Question": question_input,
             "Choices": choices_dict,
@@ -57,7 +56,7 @@ class Quiz:
             print(question_id)
 
         to_delete = input("Please enter the Question number to delete (number only): ")
-        key = f"Question [to_delete]"
+        key = f"Question {to_delete}"
         if key in self.dict_quiz:
             del self.dict_quiz[key]
             print(f"Successfully deleted {key}")
@@ -67,10 +66,10 @@ class Quiz:
     def save_quiz(self):
         RED = '\033[91m'
         RESET = '\033[0m'
-        quiz_file_name = input(f"\n{RED}!! Make sure file name is unique to avoid overwriting !!{RESET} \nPlease Enter File Name: ")
+        quiz_file_name = input(f"\n{RED}!! Make sure file name is unique to avoid overwriting !!{RESET} \nPlease Enter File Name: ").strip()
         print("\nQuiz Summary: ")
         for question_id, data in self.dict_quiz.items():
-            print(f"\n[question_id]: {data['Question']}")
+            print(f"\n{question_id}: {data['Question']}")
             for letter, choice in data['Choices'].items():
                 print(f"    {letter}. {choice}")
             print(f"Answer: {data['Answer']}")
