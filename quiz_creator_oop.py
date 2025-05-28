@@ -50,4 +50,55 @@ class Quiz:
 
         else: 
             print("Invalid question number.")
-            
+
+    def delete_question(self):
+        print("\nQuestions:")
+        for question_id in self.dict_quiz:
+            print(question_id)
+
+        to_delete = input("Please enter the Question number to delete (number only): ")
+        key = f"Question [to_delete]"
+        if key in self.dict_quiz:
+            del self.dict_quiz[key]
+            print(f"Successfully deleted {key}")
+        else:
+            print("Invalid question number.")
+
+    def save_quiz(self):
+        RED = '\033[91m'
+        RESET = '\033[0m'
+        quiz_file_name = input(f"\n{RED}!! Make sure file name is unique to avoid overwriting !!{RESET} \nPlease Enter File Name: ")
+        print("\nQuiz Summary: ")
+        for question_id, data in self.dict_quiz.items():
+            print(f"\n[question_id]: {data['Question']}")
+            for letter, choice in data['Choices'].items():
+                print(f"    {letter}. {choice}")
+            print(f"Answer: {data['Answer']}")
+
+        folder_name = "Quizzes"
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        file_name = os.path.join(folder_name, quiz_file_name)
+
+        with open(file_name, "w") as file:
+            file.write ("\n" + "~" * 40 + "\n")
+            file.write (f"Created New Quiz at - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            file.write ("\n" + "~" * 40 + "\n")
+
+            for question_id, data in self.dict_quiz.items():
+                file.write(f"\n{question_id}: {data['Question']}\n")
+                for letter, choice in data['Choices'].items():
+                    file.write(f"    {letter}. {choice}\n")
+                file.write(f"Answer: {data['Answer']}\n\n")
+
+        print("Saving quiz", end='', flush=True)
+        for msg in [" .", " ..", " ..."]:
+            time.sleep(0.5)
+            print(msg, end='', flush=True)
+        print(f"\nDone! File saved as '{quiz_file_name}.txt'")
+
+
+if __name__ == "__main__":
+    quiz = Quiz()
+    quiz.run()
