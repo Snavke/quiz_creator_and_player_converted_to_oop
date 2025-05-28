@@ -80,6 +80,33 @@ class QuizPlayer:
         questions = list(self.quiz_information.keys())
         random.shuffle(questions)
 
+        self.user_score = 0
+
+        RED = '\033[91m'
+        GREEN = '\033[92m'
+        RESET = '\033[0m'
+
+
+        for question_number in questions:
+            question_data = self.quiz_information.get(question_number)
+            if not question_data:
+                continue
+
+            print(f"\n{question_number}: {question_data['Question']}")
+            for label, choice in question_data["Choices"].items():
+                print(f"  {label}. {choice}")
+
+            user_answer = input("Answer (A, B, C, D): ").strip().lower()
+            correct_answer = question_data["Answer"].strip().lower()
+
+            if user_answer == correct_answer:
+                print(f"\n{GREEN}Correct!{RESET}")
+                self.user_score += 1
+            else:
+                print(f"\n{RED}Wrong! {RESET}The correct answer is {correct_answer}")
+
+        print(f"\nQuiz Completed \nYour final score: {self.user_score}/{len(questions)}")
+    
     def run(self):
         quizzes = self.list_quizzes()
         
