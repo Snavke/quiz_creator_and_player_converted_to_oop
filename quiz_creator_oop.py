@@ -39,7 +39,7 @@ class Quiz:
             print("Enter the new 4 choices: ")
             for label in self.choice_labels:
                 new_choice = input(f"Choice {label}: ")
-                new_choice[label] = new_choice
+                new_choices[label] = new_choice
             new_answer = input("Enter new correct answer (The letter): ").upper()
             self.dict_quiz[key] = {
                 "Question": new_question,
@@ -100,19 +100,21 @@ class Quiz:
 
     def run(self):
         while True:
-            exit_prompt = input("Continue adding question? (yes/edit/delete/exit): ").lower()
+            self.add_question()
+            while True:
+                exit_prompt = input("Continue adding question? (yes/edit/delete/exit): ").lower()
 
-            if exit_prompt == "edit":
-                self.edit_question()
-            elif exit_prompt == "delete":
-                self.delete_question()
-            elif exit_prompt == "yes":
-                break
-            elif exit_prompt == "exit":
-                self.save_quiz()
-                exit()
-            else:
-                print("Invalid input. Please enter yes/edit/delete/exit.")
+                if exit_prompt == "edit":
+                    self.edit_question()
+                elif exit_prompt == "delete":
+                    self.delete_question()
+                elif exit_prompt == "yes":
+                    break
+                elif exit_prompt == "exit":
+                    self.save_quiz()
+                    exit()
+                else:
+                    print("Invalid input. Please enter yes/edit/delete/exit.")
 
 
 if __name__ == "__main__":
