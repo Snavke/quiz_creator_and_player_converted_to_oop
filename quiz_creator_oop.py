@@ -98,6 +98,22 @@ class Quiz:
             print(msg, end='', flush=True)
         print(f"\nDone! File saved as '{quiz_file_name}.txt'")
 
+    def run(self):
+        while True:
+            exit_prompt = input("Continue adding question? (yes/edit/delete/exit): ").lower()
+
+            if exit_prompt == "edit":
+                self.edit_question()
+            elif exit_prompt == "delete":
+                self.delete_question()
+            elif exit_prompt == "yes":
+                break
+            elif exit_prompt == "exit":
+                self.save_quiz()
+                exit()
+            else:
+                print("Invalid input. Please enter yes/edit/delete/exit.")
+
 
 if __name__ == "__main__":
     quiz = Quiz()
