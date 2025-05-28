@@ -21,7 +21,7 @@ class QuizPlayer:
         for msg in [" .", " ..", " ..."]:
             time.sleep(0.5)
             print(msg, end='', flush=True)
-            
+
         root = tk.Tk()
         root.withdraw()
         root.attributes('-topmost', True)
@@ -69,3 +69,14 @@ class QuizPlayer:
             json.dump(self.quiz_information, json_file, indent=4)
 
         print(f"\nQuiz successfully saved as {os.path.basename(json_file_path)}")
+    
+    def load_existing_quiz(self, file_name):
+        with open(os.path.join(self.folder_name, file_name), 'r') as json_file:
+            self.quiz_information = json.load(json_file)
+        print(f"\nLoaded Quiz Successfully: {file_name}")
+
+    def take_quiz(self):
+        print("\nLoading quiz...")
+        questions = list(self.quiz_information.keys())
+        random.shuffle(questions)
+
